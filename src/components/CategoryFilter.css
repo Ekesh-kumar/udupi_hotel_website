@@ -1,0 +1,98 @@
+.category-filter {
+  margin-bottom: 2rem;
+}
+
+.category-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  min-width: 120px;
+  justify-content: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.category-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.category-btn.active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #2d3748;
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.category-name {
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .category-buttons {
+    gap: 0.25rem;
+  }
+  
+  .category-btn {
+    padding: 0.5rem 1rem;
+    min-width: 100px;
+  }
+  
+  .category-name {
+    font-size: 0.8rem;
+  }
+  
+  .category-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .category-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .category-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+}
