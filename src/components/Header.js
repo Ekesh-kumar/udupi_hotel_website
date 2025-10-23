@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
 const Header = ({ searchTerm, setSearchTerm, showBackButton = false }) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const scrollToSection = (sectionId) => {
     if (isHomePage) {
@@ -16,6 +17,12 @@ const Header = ({ searchTerm, setSearchTerm, showBackButton = false }) => {
       // If not on home page, navigate to home and then scroll
       window.location.href = `/#${sectionId}`;
     }
+    // Close mobile menu after navigation
+    setIsMobileMenuOpen(false);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -36,7 +43,19 @@ const Header = ({ searchTerm, setSearchTerm, showBackButton = false }) => {
             </Link>
           </div>
           
-          <div className="nav-links">
+          {/* Mobile hamburger menu button */}
+          <button 
+            className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          
+          {/* Desktop navigation */}
+          <div className="nav-links desktop-nav">
             <button 
               className="nav-link" 
               onClick={() => scrollToSection('services-section')}
@@ -51,24 +70,60 @@ const Header = ({ searchTerm, setSearchTerm, showBackButton = false }) => {
             </button>
           </div>
           
-          {!isHomePage && showBackButton && (
-            <Link to="/" className="back-button">
-              ← Back to Home
-            </Link>
-          )}
+          {/* Mobile navigation menu */}
+          <div className={`mobile-nav ${isMobileMenuOpen ? 'active' : ''}`}>
+            <button 
+              className="nav-link" 
+              onClick={() => scrollToSection('services-section')}
+            >
+              Our Services
+            </button>
+            <button 
+              className="nav-link" 
+              onClick={() => scrollToSection('contact-section')}
+            >
+              Contact Us
+            </button>
+            {!isHomePage && showBackButton && (
+              <Link to="/" className="back-button" onClick={() => setIsMobileMenuOpen(false)}>
+                ← Back to Home
+              </Link>
+            )}
+            {searchTerm !== undefined && (
+              <div className="search-container mobile-search">
+                <input
+                  type="text"
+                  placeholder="Search services..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input"
+                />
+                <span className="search-icon">🔍</span>
+              </div>
+            )}
+          </div>
           
-          {searchTerm !== undefined && (
-            <div className="search-container">
-              <input
-                type="text"
-                placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-              <span className="search-icon">🔍</span>
-            </div>
-          )}
+          {/* Desktop search and back button */}
+          <div className="desktop-actions">
+            {!isHomePage && showBackButton && (
+              <Link to="/" className="back-button">
+                ← Back to Home
+              </Link>
+            )}
+            
+            {searchTerm !== undefined && (
+              <div className="search-container desktop-search">
+                <input
+                  type="text"
+                  placeholder="Search services..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="search-input"
+                />
+                <span className="search-icon">🔍</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
